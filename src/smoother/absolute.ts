@@ -1,4 +1,4 @@
-import { ParsedSVGCommand, Point, SVGOperation } from "../types";
+import { ParsedSVGCommand, Point, SVGOperation } from "../domain";
 import { stringifyCommandFromCommand } from "../utils/commands";
 
 export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGCommand[] {

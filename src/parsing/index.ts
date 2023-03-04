@@ -1,5 +1,5 @@
-import { ParsedSVGCommand, RawSVGCommand, SVGOperation } from "../types";
-import { castToSVGOperation } from "../types/utils";
+import { ParsedSVGCommand, RawSVGCommand, SVGOperation } from "../domain";
+import { castToSVGOperation } from "../domain/utils";
 import {
     assertCommandLength,
     COMMAND_LENGTH,

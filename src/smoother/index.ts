@@ -8,7 +8,7 @@ import {
     SmoothCubicSVGCommand,
     SmoothQuadraticSVGCommand,
     SVGOperation,
-} from "../types";
+} from "../domain";
 import { convertToAbsolute } from "./absolute";
 import { moveTowards, moveTowardsFractional } from "../utils/math";
 
