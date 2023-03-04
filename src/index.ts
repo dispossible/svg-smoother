@@ -1,6 +1,3 @@
-// polyfills
-import "object_values";
-
 import { parsePath } from "./parsing";
 import { smoothCommands } from "./smoother";
 import { stringifyCommands } from "./utils/commands";
