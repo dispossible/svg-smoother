@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "lib": ["ES2022", "DOM"],
         "strict": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
