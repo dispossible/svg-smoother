@@ -1,5 +1,4 @@
 import { ParsedSVGCommand, Point, SVGOperation } from "../domain";
-import { stringifyCommandFromCommand } from "../utils/commands";
 
 export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGCommand[] {
     let currentPosition: Point = {
@@ -42,7 +41,7 @@ export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGComman
                     relative: false,
                     end: {
                         x: currentPosition.x + command.end.x,
-                        y: currentPosition.x + command.end.y,
+                        y: currentPosition.y + command.end.y,
                     },
                 };
                 break;
@@ -57,6 +56,8 @@ export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGComman
                         y: currentPosition.y,
                     },
                 };
+                // @ts-expect-error Tidying up from type conversion
+                delete absoluteCommand.x;
                 break;
             }
             case SVGOperation.VERTICAL: {
@@ -69,6 +70,8 @@ export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGComman
                         y: currentPosition.y + command.y,
                     },
                 };
+                // @ts-expect-error Tidying up from type conversion
+                delete absoluteCommand.y;
                 break;
             }
             case SVGOperation.CUBIC: {
@@ -77,15 +80,15 @@ export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGComman
                     relative: false,
                     controlPointA: {
                         x: currentPosition.x + command.controlPointA.x,
-                        y: currentPosition.x + command.controlPointA.y,
+                        y: currentPosition.y + command.controlPointA.y,
                     },
                     controlPointB: {
                         x: currentPosition.x + command.controlPointB.x,
-                        y: currentPosition.x + command.controlPointB.y,
+                        y: currentPosition.y + command.controlPointB.y,
                     },
                     end: {
                         x: currentPosition.x + command.end.x,
-                        y: currentPosition.x + command.end.y,
+                        y: currentPosition.y + command.end.y,
                     },
                 };
                 break;
@@ -97,18 +100,17 @@ export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGComman
                     relative: false,
                     controlPoint: {
                         x: currentPosition.x + command.controlPoint.x,
-                        y: currentPosition.x + command.controlPoint.y,
+                        y: currentPosition.y + command.controlPoint.y,
                     },
                     end: {
                         x: currentPosition.x + command.end.x,
-                        y: currentPosition.x + command.end.y,
+                        y: currentPosition.y + command.end.y,
                     },
                 };
                 break;
             }
         }
 
-        absoluteCommand.rawCommand = stringifyCommandFromCommand(absoluteCommand);
         currentPosition = getEndPoint(absoluteCommand, currentPosition);
         if (absoluteCommand.operation === SVGOperation.MOVE) {
             subPathStart = { ...currentPosition };
@@ -120,6 +122,8 @@ export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGComman
 }
 
 function getEndPoint(command: ParsedSVGCommand, prevPoint: Point | null): Point {
+    // In theory all these ifs are un-hittable, it's here to handle things smoothly if something went wrong elsewhere
+
     if (command.operation === SVGOperation.CLOSE) {
         throw Error(`Unable to get end position of a ${SVGOperation.CLOSE} command`);
     }

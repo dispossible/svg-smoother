@@ -1,7 +1,7 @@
 import "mocha";
 import { expect } from "chai";
 
-import { smoothPath } from "../src/index";
+import { smoothPath } from "./index";
 
 describe("SVG Smoother", () => {
     it("Smoother is a function", () => {

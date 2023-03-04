@@ -117,6 +117,82 @@ describe("Path parsing", () => {
         ]);
     });
 
+    it("Can parse Cubics", () => {
+        expect(parsePath("C 50 60 150 140 200 205")).to.deep.equal([
+            {
+                rawCommand: "C 50 60 150 140 200 205",
+                operation: "C",
+                relative: false,
+                values: [50, 60, 150, 140, 200, 205],
+                controlPointA: {
+                    x: 50,
+                    y: 60,
+                },
+                controlPointB: {
+                    x: 150,
+                    y: 140,
+                },
+                end: {
+                    x: 200,
+                    y: 205,
+                },
+            },
+        ]);
+    });
+
+    it("Can parse Smooth Cubics", () => {
+        expect(parsePath("S 50 60 200 205")).to.deep.equal([
+            {
+                rawCommand: "S 50 60 200 205",
+                operation: "S",
+                relative: false,
+                values: [50, 60, 200, 205],
+                controlPoint: {
+                    x: 50,
+                    y: 60,
+                },
+                end: {
+                    x: 200,
+                    y: 205,
+                },
+            },
+        ]);
+    });
+
+    it("Can parse Quadratics", () => {
+        expect(parsePath("Q 50 60 150 140")).to.deep.equal([
+            {
+                rawCommand: "Q 50 60 150 140",
+                operation: "Q",
+                relative: false,
+                values: [50, 60, 150, 140],
+                controlPoint: {
+                    x: 50,
+                    y: 60,
+                },
+                end: {
+                    x: 150,
+                    y: 140,
+                },
+            },
+        ]);
+    });
+
+    it("Can parse Smooth Quadratics", () => {
+        expect(parsePath("T 150 140")).to.deep.equal([
+            {
+                rawCommand: "T 150 140",
+                operation: "T",
+                relative: false,
+                values: [150, 140],
+                end: {
+                    x: 150,
+                    y: 140,
+                },
+            },
+        ]);
+    });
+
     it("Can parse Arcs", () => {
         expect(parsePath("A 50 40 190 0 1 100 120")).to.deep.equal([
             {
@@ -133,6 +209,17 @@ describe("Path parsing", () => {
                     x: 100,
                     y: 120,
                 },
+            },
+        ]);
+    });
+
+    it("Can parse Close commands", () => {
+        expect(parsePath("Z")).to.deep.equal([
+            {
+                rawCommand: "Z",
+                operation: "Z",
+                relative: false,
+                values: [],
             },
         ]);
     });
@@ -312,5 +399,9 @@ describe("Path parsing", () => {
                 },
             },
         ]);
+    });
+
+    it("Fails to parse unknown commands", () => {
+        expect(() => parsePath("P 40 50")).to.throw();
     });
 });

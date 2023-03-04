@@ -9,6 +9,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 coverage
 *.lcov
 .lock-wscript
+.nyc_output
 
 node_modules/
 jspm_packages/
