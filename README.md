@@ -2,7 +2,7 @@
 
 A utility for adding rounded corners to SVG paths.
 
-Currently only supports hard corners, any pre-existing curve commands are left as is, including corners leading into curve commands. See [examples file](examples.html) for a demonstration.
+Currently only supports hard corners, any pre-existing curve commands are left as is, including corners leading into curve commands. See [examples file](https://htmlpreview.github.io/?https://github.com/dispossible/svg-smoother/blob/main/examples.html) for a demonstration.
 
 ## Installation
 
