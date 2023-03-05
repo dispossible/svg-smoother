@@ -6,11 +6,12 @@
         "lib/**/*"
     ],
     "main": "./lib/cjs/index.js",
+    "module": "./lib/esm/index.js",
     "exports": {
         ".": {
             "import": {
                 "types": "./lib/esm/types/index.d.ts",
-                "default": "./lib/esm/index.mjs"
+                "default": "./lib/esm/index.js"
             },
             "require": {
                 "types": "./lib/cjs/types/index.d.ts",
@@ -34,7 +35,11 @@
         "type": "git",
         "url": "git+https://github.com/dispossible/svg-smoother.git"
     },
-    "author": "Dispossible",
+    "author": {
+        "name": "Dispossible",
+        "email": "mail+npm@dispossible.com",
+        "url": "https://dispossible.com"
+    },
     "license": "GPL-3.0-or-later",
     "bugs": {
         "url": "https://github.com/dispossible/svg-smoother/issues"
