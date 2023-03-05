@@ -53,6 +53,7 @@ smoothPathElement(path, 10);
 -   Investigate support for smoothing into and out of curve commands
 -   Add more examples
 -   Measure and improve performance
+-   Add an optimization step to remove large floats, and restore usage of H and V commands
 
 ## Support
 
@@ -62,4 +63,4 @@ Browser support requires support of [`Object.values`](https://developer.mozilla.
 
 ## License
 
-[GNU GENERAL PUBLIC LICENSE](LICENSE)
+[GNU General Public License](LICENSE)
