@@ -22,13 +22,13 @@
     "scripts": {
         "test": "nyc mocha",
         "clean": "rimraf ./lib",
-        "build": "npm run clean && npm run build:esm && npm run build:cjs && build:examples",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs",
         "build:esm": "tsc -p ./tsconfig.esm.json",
         "build:cjs": "tsc -p ./tsconfig.cjs.json",
+        "build:examples": "node ./scripts/generateExamples.mjs",
         "prepack": "npm run build",
         "format": "prettier --write src public",
-        "lint": "eslint . --ext .ts",
-        "build:examples": "node ./scripts/generateExamples.mjs"
+        "lint": "eslint . --ext .ts"
     },
     "repository": {
         "type": "git",

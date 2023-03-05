@@ -52,7 +52,7 @@ export function smoothCommands(inputCommands: ParsedSVGCommand[], radius: number
         smoothedCommands.push(inputCommands[0]);
 
         for (let i = 1; i < inputCommands.length; i++) {
-            const prevCmd = smoothedCommands[smoothedCommands.length - 1];
+            const prevCmd = inputCommands[i - 1];
             const currCmd = inputCommands[i];
             const nextCmd = i === inputCommands.length - 1 && closeCommand ? inputCommands[1] : inputCommands[i + 1];
 
