@@ -16,7 +16,7 @@ There are functions exported from this package;
 
 ### `smoothPath`
 
-The `smoothPath` command takes in a string matching the SVG `d` syntax. [MDN]](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d)
+The `smoothPath` command takes in a string matching the SVG `d` syntax. [MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d)
 
 The second argument is a value representing the amount of coordinate points to round the corners by. Values work much like CSSs `border-radius` values.
 
