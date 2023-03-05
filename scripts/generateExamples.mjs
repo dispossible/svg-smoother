@@ -1,4 +1,4 @@
-import { smoothPathElement } from "../lib/cjs/index.js";
+import { smoothPathElement } from "../dist/index.mjs";
 import { JSDOM } from "jsdom";
 import fs from "fs";
 import path from "path";

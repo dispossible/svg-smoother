@@ -1,4 +1,4 @@
-import { ParsedSVGCommand, RawSVGCommand, SVGOperation } from "../domain/index.js";
+import { ParsedSVGCommand, RawSVGCommand, SVGOperation } from "../domain";
 
 export const COMMAND_LENGTH: Record<SVGOperation, number> = {
     [SVGOperation.MOVE]: 2,

@@ -3,28 +3,26 @@
     "version": "1.0.0",
     "description": "Smooth SVG paths",
     "files": [
-        "lib/**/*"
+        "dist/**/*"
     ],
-    "main": "./lib/cjs/index.js",
-    "module": "./lib/esm/index.js",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
     "exports": {
         "import": {
-            "types": "./lib/esm/types/index.d.ts",
-            "default": "./lib/esm/index.js"
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.mjs"
         },
         "require": {
-            "types": "./lib/cjs/types/index.d.ts",
-            "default": "./lib/cjs/index.js"
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
         }
     },
-    "types": "./lib/cjs/types/index.d.ts",
     "scripts": {
         "test": "nyc mocha",
         "clean": "rimraf ./lib",
-        "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:hints",
-        "build:esm": "tsc -p ./tsconfig.esm.json",
-        "build:cjs": "tsc -p ./tsconfig.cjs.json",
-        "build:hints": "node ./scripts/typeHints.mjs",
+        "build": "npm run clean && npm run build:js",
+        "build:js": "tsup src/index.ts --format cjs,esm --dts --clean",
         "build:examples": "node ./scripts/generateExamples.mjs",
         "prepack": "npm run build",
         "format": "prettier --write src public",
@@ -59,6 +57,15 @@
         "prettier": "^2.8.4",
         "rimraf": "^4.1.3",
         "ts-node": "^10.9.1",
+        "tsup": "^6.6.3",
         "typescript": "^4.9.5"
+    },
+    "release": {
+        "branches": [
+            "main"
+        ]
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

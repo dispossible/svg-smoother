@@ -1,12 +1,12 @@
-import { ParsedSVGCommand, RawSVGCommand, SVGOperation } from "../domain/index.js";
-import { castToSVGOperation } from "../domain/utils.js";
+import { ParsedSVGCommand, RawSVGCommand, SVGOperation } from "../domain";
+import { castToSVGOperation } from "../domain/utils";
 import {
     assertCommandLength,
     COMMAND_LENGTH,
     stringifyCommandFromCommand,
     stringifyCommandWithValues,
-} from "../utils/commands.js";
-import { chunkArray } from "../utils/array.js";
+} from "../utils/commands";
+import { chunkArray } from "../utils/array";
 
 export function parsePath(pathString: string): ParsedSVGCommand[] {
     const normalizedPath = normalizePath(pathString);
