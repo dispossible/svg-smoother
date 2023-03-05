@@ -1,4 +1,4 @@
-# SVG Smoother ![Tests](https://github.com/dispossible/svg-smoother/workflows/Tests/badge.svg)
+# SVG Smoother [![Tests](https://github.com/dispossible/svg-smoother/workflows/Tests/badge.svg)](https://github.com/dispossible/svg-smoother/actions/?query=workflow%3ATests)
 
 A utility for adding rounded corners to SVG paths.
 
@@ -53,7 +53,7 @@ smoothPathElement(path, 10);
 -   Investigate support for smoothing into and out of curve commands
 -   Add more examples
 -   Measure and improve performance
--   Add an optimization step to remove large floats, and restore usage of H and V commands
+-   Add an optimization step to remove large floats, ~~and restore usage of H and V commands~~
 
 ## Support
 

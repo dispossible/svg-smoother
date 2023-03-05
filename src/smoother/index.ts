@@ -12,7 +12,7 @@ import {
 import { convertToAbsolute } from "./absolute";
 import { moveTowards, moveTowardsFractional } from "../utils/math";
 import { updateCommandValues } from "../utils/commands";
-import { removeLinearCommands } from "./linear";
+import { removeLinearCommands, replaceLinearCommands } from "./linear";
 
 export function smoothCommands(inputCommands: ParsedSVGCommand[], radius: number): ParsedSVGCommand[] {
     const absoluteCommands = convertToAbsolute(inputCommands);
@@ -108,7 +108,7 @@ export function smoothCommands(inputCommands: ParsedSVGCommand[], radius: number
             });
         }
 
-        return smoothedCommands;
+        return replaceLinearCommands(smoothedCommands);
     });
 
     return smoothedSubPaths.flat(1).map(updateCommandValues);

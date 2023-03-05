@@ -54,14 +54,11 @@ describe("Smooth commands", () => {
                 },
             },
             {
-                operation: SVGOperation.LINE,
+                operation: SVGOperation.HORIZONTAL,
                 relative: false,
-                rawCommand: "L 30 10",
-                values: [30, 10],
-                end: {
-                    x: 30,
-                    y: 10,
-                },
+                rawCommand: "H 30",
+                values: [30],
+                x: 30,
             },
             {
                 operation: SVGOperation.CUBIC,
@@ -82,14 +79,11 @@ describe("Smooth commands", () => {
                 },
             },
             {
-                operation: SVGOperation.LINE,
+                operation: SVGOperation.VERTICAL,
                 relative: false,
-                rawCommand: "L 40 40",
-                values: [40, 40],
-                end: {
-                    x: 40,
-                    y: 40,
-                },
+                rawCommand: "V 40",
+                values: [40],
+                y: 40,
             },
         ]);
     });
