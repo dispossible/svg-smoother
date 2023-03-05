@@ -1,15 +1,25 @@
 {
     "compilerOptions": {
-        "lib": ["ES2022", "DOM"],
+        "lib": ["ESNext"],
+        "moduleResolution": "node",
         "strict": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
         "skipLibCheck": true,
         "checkJs": true,
         "allowJs": true,
         "declaration": true,
         "declarationMap": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "inlineSourceMap": false,
+        "listEmittedFiles": false,
+        "pretty": true,
+        "resolveJsonModule": true,
+        "rootDir": "src",
+        "traceResolution": false,
+        "listFiles": false
     },
+    "exclude": ["node_modules", "/lib"],
     "files": ["./src/index.ts"]
 }

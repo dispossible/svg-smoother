@@ -1,4 +1,4 @@
-import { Point } from "../domain";
+import { Point } from "../domain/index.js";
 
 export function moveTowards(movingPoint: Point, targetPoint: Point, amount: number): Point {
     const width = targetPoint.x - movingPoint.x;

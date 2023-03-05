@@ -1,4 +1,4 @@
-import { ParsedSVGCommand, Point, SVGOperation } from "../domain";
+import { ParsedSVGCommand, Point, SVGOperation } from "../domain/index.js";
 
 export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGCommand[] {
     let currentPosition: Point = {

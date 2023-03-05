@@ -8,11 +8,11 @@ import {
     SmoothCubicSVGCommand,
     SmoothQuadraticSVGCommand,
     SVGOperation,
-} from "../domain";
-import { convertToAbsolute } from "./absolute";
-import { moveTowards, moveTowardsFractional } from "../utils/math";
-import { updateCommandValues } from "../utils/commands";
-import { removeLinearCommands } from "./linear";
+} from "../domain/index.js";
+import { convertToAbsolute } from "./absolute.js";
+import { moveTowards, moveTowardsFractional } from "../utils/math.js";
+import { updateCommandValues } from "../utils/commands.js";
+import { removeLinearCommands } from "./linear.js";
 
 export function smoothCommands(inputCommands: ParsedSVGCommand[], radius: number): ParsedSVGCommand[] {
     const absoluteCommands = convertToAbsolute(inputCommands);

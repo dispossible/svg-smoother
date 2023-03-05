@@ -1,4 +1,4 @@
-import { SVGOperation } from ".";
+import { SVGOperation } from "./index.js";
 
 export function castToEnum<T>(str: string | number, enumType: T): T[keyof T] {
     // Cast the type to a Record to make TS ignore this as there is no good way (that I know of) to say that T must be an enum

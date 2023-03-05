@@ -8,24 +8,23 @@
     "main": "./lib/cjs/index.js",
     "module": "./lib/esm/index.js",
     "exports": {
-        ".": {
-            "import": {
-                "types": "./lib/esm/types/index.d.ts",
-                "default": "./lib/esm/index.js"
-            },
-            "require": {
-                "types": "./lib/cjs/types/index.d.ts",
-                "default": "./lib/cjs/index.js"
-            }
+        "import": {
+            "types": "./lib/esm/types/index.d.ts",
+            "default": "./lib/esm/index.js"
+        },
+        "require": {
+            "types": "./lib/cjs/types/index.d.ts",
+            "default": "./lib/cjs/index.js"
         }
     },
     "types": "./lib/cjs/types/index.d.ts",
     "scripts": {
         "test": "nyc mocha",
         "clean": "rimraf ./lib",
-        "build": "npm run clean && npm run build:esm && npm run build:cjs",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:hints",
         "build:esm": "tsc -p ./tsconfig.esm.json",
         "build:cjs": "tsc -p ./tsconfig.cjs.json",
+        "build:hints": "node ./scripts/typeHints.mjs",
         "build:examples": "node ./scripts/generateExamples.mjs",
         "prepack": "npm run build",
         "format": "prettier --write src public",

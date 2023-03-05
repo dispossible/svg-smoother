@@ -9,7 +9,7 @@ import {
     SmoothCubicSVGCommand,
     SmoothQuadraticSVGCommand,
     SVGOperation,
-} from "../domain";
+} from "../domain/index.js";
 
 type NonLinearSVGCommand =
     | MoveSVGCommand

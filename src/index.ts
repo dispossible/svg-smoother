@@ -1,6 +1,6 @@
-import { parsePath } from "./parsing";
-import { smoothCommands } from "./smoother";
-import { stringifyCommands } from "./utils/commands";
+import { parsePath } from "./parsing/index.js";
+import { smoothCommands } from "./smoother/index.js";
+import { stringifyCommands } from "./utils/commands.js";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
