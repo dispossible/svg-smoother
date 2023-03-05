@@ -22,6 +22,7 @@ function normalizePath(pathString: string): string {
             // Remove any runs of spaces
             .replace(/\s{2,}/g, " ")
             // Space out any letters that are touching other things
+            .replace(/([a-zA-Z])([a-zA-Z])/g, "$1 $2")
             .replace(/(\S)([a-zA-Z])/g, "$1 $2")
             .replace(/([a-zA-Z])(\S)/g, "$1 $2")
             // Remove any leading and trailing space

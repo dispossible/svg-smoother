@@ -117,6 +117,105 @@ describe("Path parsing", () => {
         ]);
     });
 
+    it("Can parse concatenated numbers with letters", () => {
+        expect(parsePath("M50.57 50h-30V60.1H -50.554, Z")).to.deep.equal([
+            {
+                rawCommand: "M 50.57 50",
+                operation: "M",
+                relative: false,
+                values: [50.57, 50],
+                end: {
+                    x: 50.57,
+                    y: 50,
+                },
+            },
+            {
+                rawCommand: "h -30",
+                operation: "H",
+                relative: true,
+                values: [-30],
+                x: -30,
+            },
+            {
+                rawCommand: "V 60.1",
+                operation: "V",
+                relative: false,
+                values: [60.1],
+                y: 60.1,
+            },
+            {
+                rawCommand: "H -50.554",
+                operation: "H",
+                relative: false,
+                values: [-50.554],
+                x: -50.554,
+            },
+            {
+                rawCommand: "Z",
+                operation: "Z",
+                relative: false,
+                values: [],
+            },
+        ]);
+    });
+
+    it("Can parse concatenated letters", () => {
+        expect(parsePath("M20 20L30 30ZM90 90L60 60Z")).to.deep.equal([
+            {
+                rawCommand: "M 20 20",
+                operation: "M",
+                relative: false,
+                values: [20, 20],
+                end: {
+                    x: 20,
+                    y: 20,
+                },
+            },
+            {
+                rawCommand: "L 30 30",
+                operation: "L",
+                relative: false,
+                values: [30, 30],
+                end: {
+                    x: 30,
+                    y: 30,
+                },
+            },
+            {
+                rawCommand: "Z",
+                operation: "Z",
+                relative: false,
+                values: [],
+            },
+            {
+                rawCommand: "M 90 90",
+                operation: "M",
+                relative: false,
+                values: [90, 90],
+                end: {
+                    x: 90,
+                    y: 90,
+                },
+            },
+            {
+                rawCommand: "L 60 60",
+                operation: "L",
+                relative: false,
+                values: [60, 60],
+                end: {
+                    x: 60,
+                    y: 60,
+                },
+            },
+            {
+                rawCommand: "Z",
+                operation: "Z",
+                relative: false,
+                values: [],
+            },
+        ]);
+    });
+
     it("Can parse Cubics", () => {
         expect(parsePath("C 50 60 150 140 200 205")).to.deep.equal([
             {

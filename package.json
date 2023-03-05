@@ -22,12 +22,13 @@
     "scripts": {
         "test": "nyc mocha",
         "clean": "rimraf ./lib",
-        "build": "npm run clean && npm run build:esm && npm run build:cjs",
+        "build": "npm run clean && npm run build:esm && npm run build:cjs && build:examples",
         "build:esm": "tsc -p ./tsconfig.esm.json",
         "build:cjs": "tsc -p ./tsconfig.cjs.json",
         "prepack": "npm run build",
         "format": "prettier --write src public",
-        "lint": "eslint . --ext .ts"
+        "lint": "eslint . --ext .ts",
+        "build:examples": "node ./scripts/generateExamples.mjs"
     },
     "repository": {
         "type": "git",
@@ -41,12 +42,14 @@
     "homepage": "https://github.com/dispossible/svg-smoother#readme",
     "devDependencies": {
         "@types/chai": "^4.3.4",
+        "@types/jsdom": "^21.1.0",
         "@types/mocha": "^10.0.1",
         "@typescript-eslint/eslint-plugin": "^5.54.0",
         "@typescript-eslint/parser": "^5.54.0",
         "chai": "^4.3.7",
         "eslint": "^8.35.0",
         "eslint-config-prettier": "^8.6.0",
+        "jsdom": "^21.1.0",
         "mocha": "^10.2.0",
         "nyc": "^15.1.0",
         "prettier": "^2.8.4",
