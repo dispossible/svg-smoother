@@ -49,29 +49,19 @@ export function convertToAbsolute(commands: ParsedSVGCommand[]): ParsedSVGComman
             case SVGOperation.HORIZONTAL: {
                 absoluteCommand = {
                     ...command,
-                    operation: SVGOperation.LINE,
+                    operation: SVGOperation.HORIZONTAL,
                     relative: false,
-                    end: {
-                        x: currentPosition.x + command.x,
-                        y: currentPosition.y,
-                    },
+                    x: currentPosition.x + command.x,
                 };
-                // @ts-expect-error Tidying up from type conversion
-                delete absoluteCommand.x;
                 break;
             }
             case SVGOperation.VERTICAL: {
                 absoluteCommand = {
                     ...command,
-                    operation: SVGOperation.LINE,
+                    operation: SVGOperation.VERTICAL,
                     relative: false,
-                    end: {
-                        x: currentPosition.x,
-                        y: currentPosition.y + command.y,
-                    },
+                    y: currentPosition.y + command.y,
                 };
-                // @ts-expect-error Tidying up from type conversion
-                delete absoluteCommand.y;
                 break;
             }
             case SVGOperation.CUBIC: {

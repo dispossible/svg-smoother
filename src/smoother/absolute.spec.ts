@@ -434,24 +434,18 @@ describe("Absolute conversion", () => {
                 },
             },
             {
-                operation: SVGOperation.LINE,
+                operation: SVGOperation.HORIZONTAL,
                 rawCommand: "",
                 relative: false,
                 values: [],
-                end: {
-                    x: 30,
-                    y: 20,
-                },
+                x: 30,
             },
             {
-                operation: SVGOperation.LINE,
+                operation: SVGOperation.VERTICAL,
                 rawCommand: "",
                 relative: false,
                 values: [],
-                end: {
-                    x: 30,
-                    y: 10,
-                },
+                y: 10,
             },
             {
                 operation: SVGOperation.CUBIC,

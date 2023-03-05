@@ -11,6 +11,8 @@ import {
 } from "../domain";
 import { convertToAbsolute } from "./absolute";
 import { moveTowards, moveTowardsFractional } from "../utils/math";
+import { updateCommandValues } from "../utils/commands";
+import { removeLinearCommands } from "./linear";
 
 export function smoothCommands(inputCommands: ParsedSVGCommand[], radius: number): ParsedSVGCommand[] {
     const absoluteCommands = convertToAbsolute(inputCommands);
@@ -31,18 +33,19 @@ export function smoothCommands(inputCommands: ParsedSVGCommand[], radius: number
 
     const smoothedSubPaths = subPaths.map((inputCommands) => {
         const smoothedCommands: ParsedSVGCommand[] = [];
+        inputCommands = removeLinearCommands(inputCommands);
 
         const firstCommand = inputCommands[0];
         const lastCommand = inputCommands[inputCommands.length - 1];
 
-        let closePoint: ParsedSVGCommand | null = null;
+        let closeCommand: ParsedSVGCommand | null = null;
         if (lastCommand.operation === SVGOperation.CLOSE && firstCommand.operation === SVGOperation.MOVE) {
-            closePoint = {
+            closeCommand = {
                 ...firstCommand,
                 operation: SVGOperation.LINE,
             };
             // Replace the Z command with an L for now to allow the final corner to be smoothed
-            inputCommands[inputCommands.length - 1] = closePoint;
+            inputCommands[inputCommands.length - 1] = closeCommand;
         }
 
         // Add the first command, but will likely need to fix it later
@@ -51,7 +54,7 @@ export function smoothCommands(inputCommands: ParsedSVGCommand[], radius: number
         for (let i = 1; i < inputCommands.length; i++) {
             const prevCmd = smoothedCommands[smoothedCommands.length - 1];
             const currCmd = inputCommands[i];
-            const nextCmd = i === inputCommands.length - 1 ? inputCommands[1] : inputCommands[i + 1];
+            const nextCmd = i === inputCommands.length - 1 && closeCommand ? inputCommands[1] : inputCommands[i + 1];
 
             if (
                 isValidPoint(prevCmd) &&
@@ -89,7 +92,7 @@ export function smoothCommands(inputCommands: ParsedSVGCommand[], radius: number
             }
         }
 
-        if (closePoint) {
+        if (closeCommand) {
             // Re-add the Z command if it was removed earlier
             const firstCmd = smoothedCommands[0] as MoveSVGCommand;
             const lastCmd = smoothedCommands[smoothedCommands.length - 1] as LineSVGCommand;
@@ -108,7 +111,7 @@ export function smoothCommands(inputCommands: ParsedSVGCommand[], radius: number
         return smoothedCommands;
     });
 
-    return smoothedSubPaths.flat(1);
+    return smoothedSubPaths.flat(1).map(updateCommandValues);
 }
 
 function isValidPoint(
@@ -129,5 +132,5 @@ function isValidPoint(
         SVGOperation.QUADRATIC,
         SVGOperation.SMOOTH_QUADRATIC,
         SVGOperation.ARC,
-    ].includes(command.operation);
+    ].includes(command?.operation);
 }

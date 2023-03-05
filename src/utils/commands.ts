@@ -1,4 +1,4 @@
-import { RawSVGCommand, SVGOperation } from "../domain";
+import { ParsedSVGCommand, RawSVGCommand, SVGOperation } from "../domain";
 
 export const COMMAND_LENGTH: Record<SVGOperation, number> = {
     [SVGOperation.MOVE]: 2,
@@ -40,4 +40,58 @@ export function stringifyCommand(operation: SVGOperation, relative: boolean, val
 
 export function stringifyCommands(commands: RawSVGCommand[]): string {
     return commands.map(stringifyCommandFromCommand).join(" ");
+}
+
+export function updateCommandValues(command: ParsedSVGCommand): ParsedSVGCommand {
+    switch (command.operation) {
+        case SVGOperation.MOVE:
+        case SVGOperation.LINE:
+        case SVGOperation.SMOOTH_QUADRATIC: {
+            command.values = [command.end.x, command.end.y];
+            break;
+        }
+        case SVGOperation.HORIZONTAL: {
+            command.values = [command.x];
+            break;
+        }
+        case SVGOperation.VERTICAL: {
+            command.values = [command.y];
+            break;
+        }
+        case SVGOperation.CUBIC: {
+            command.values = [
+                command.controlPointA.x,
+                command.controlPointA.y,
+                command.controlPointB.x,
+                command.controlPointB.y,
+                command.end.x,
+                command.end.y,
+            ];
+            break;
+        }
+        case SVGOperation.SMOOTH_CUBIC:
+        case SVGOperation.QUADRATIC: {
+            command.values = [command.controlPoint.x, command.controlPoint.y, command.end.x, command.end.y];
+            break;
+        }
+        case SVGOperation.ARC: {
+            command.values = [
+                command.radiusX,
+                command.radiusY,
+                command.angle,
+                command.largeArc ? 1 : 0,
+                command.sweep ? 1 : 0,
+                command.end.x,
+                command.end.y,
+            ];
+            break;
+        }
+        case SVGOperation.CLOSE: {
+            command.values = [];
+            break;
+        }
+    }
+
+    command.rawCommand = stringifyCommandFromCommand(command);
+    return command;
 }
