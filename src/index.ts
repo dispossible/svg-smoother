@@ -1,6 +1,7 @@
 import { parsePath } from "./parsing";
 import { smoothCommands } from "./smoother";
 import { stringifyCommands } from "./utils/commands";
+import { parsePolygon, Polygon } from "./parsing/polygon";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -15,4 +16,10 @@ export function smoothPathElement(pathEl: SVGPathElement, radius = 8): SVGPathEl
     const smoothedPath = smoothPath(pathString, radius);
     pathEl.setAttributeNS(SVG_NS, "d", smoothedPath);
     return pathEl;
+}
+
+export function smoothPolygon(polygon: Polygon, radius = 8): string {
+    const inputCommands = parsePolygon(polygon);
+    const smoothed = smoothCommands(inputCommands, radius);
+    return stringifyCommands(smoothed);
 }

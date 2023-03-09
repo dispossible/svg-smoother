@@ -12,13 +12,13 @@ npm i svg-smoother
 
 ## Usage
 
-There are functions exported from this package;
+There are several functions exported from this package;
 
 ### `smoothPath`
 
 The `smoothPath` command takes in a string matching the SVG `d` syntax. [MDN](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d)
 
-The second argument is a value representing the amount of coordinate points to round the corners by. Values work much like CSSs `border-radius` values.
+The second argument is a value representing the amount of coordinate points to round the corners by. These values work much like setting CSSs `border-radius` property.
 
 ```js
 import { smoothPath } from "svg-smoother";
@@ -47,6 +47,25 @@ const path = document.querySelector("path");
 smoothPathElement(path, 10);
 ```
 
+### `smoothPolygon`
+
+The `smoothPolygon` function will take a array of number pairs (`[number, number][]`) and convert it into a smoothed SVG path string.
+
+This function was designed to work with a similar syntax to the CSS [`polygon`](https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape/polygon) command. Note that the values are not treated as percentages like in CSS but if you provide numbers between 0-100 it works just the same.
+
+```js
+import { smoothPolygon } from "svg-smoother";
+
+const smoothPolygon = smoothPath(
+    [
+        [10, 10],
+        [40, 10],
+        [40, 40],
+    ],
+    10
+);
+```
+
 ## Planned features
 
 -   Deal with radius values that are larger than the preceding line
@@ -57,7 +76,7 @@ smoothPathElement(path, 10);
 
 ## Support
 
-Versions of Node >= 14 are tested to work, but testing is limited because of a dependency on JSDOM in my tests which is Node >= 14. SVG Smoother itself is likely to work on older versions than that.
+Versions of Node >= 14 are tested to work, but testing lower versions is limited because of a testing dependency on JSDOM which has a minimum Node version of 14. SVG Smoother itself is likely to work on older versions than that.
 
 Browser support requires support of [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values#browser_compatibility)
 

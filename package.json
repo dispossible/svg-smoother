@@ -22,7 +22,7 @@
         "test": "nyc mocha",
         "clean": "rimraf ./lib",
         "build": "npm run clean && npm run build:js",
-        "build:js": "tsup src/index.ts --format cjs,esm --dts --clean",
+        "build:js": "tsup src/index.ts --format cjs,esm,iife --dts --clean --minify",
         "build:examples": "node ./scripts/generateExamples.mjs",
         "prepack": "npm run build",
         "format": "prettier --write src public",
