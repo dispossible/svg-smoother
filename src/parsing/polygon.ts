@@ -3,7 +3,7 @@ import { updateCommandValues } from "../utils/commands";
 
 export type Polygon = [number, number][];
 
-export function parsePolygon(polygon: Polygon): ParsedSVGCommand[] {
+export function parsePolygon(polygon: Polygon, closedPath = true): ParsedSVGCommand[] {
     if (!Array.isArray(polygon)) {
         throw new TypeError(`Provided polygon was not an array of number pairs`);
     }
@@ -30,12 +30,14 @@ export function parsePolygon(polygon: Polygon): ParsedSVGCommand[] {
         return updateCommandValues(command);
     });
 
-    commands.push({
-        operation: SVGOperation.CLOSE,
-        rawCommand: "Z",
-        values: [],
-        relative: false,
-    });
+    if (closedPath) {
+        commands.push({
+            operation: SVGOperation.CLOSE,
+            rawCommand: "Z",
+            values: [],
+            relative: false,
+        });
+    }
 
     return commands;
 }

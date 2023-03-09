@@ -65,4 +65,18 @@ describe("Polygon smoother", () => {
             "M 10 0 H 90 C 95 0 100 5 100 10 V 90 C 100 95 95 100 90 100 H 10 C 5 100 0 95 0 90 V 10 C 0 5 5 0 10 0 Z"
         );
     });
+
+    it("Smooth a simple corner", () => {
+        expect(
+            smoothPolygon(
+                [
+                    [10, 10],
+                    [40, 10],
+                    [40, 40],
+                ],
+                10,
+                false
+            )
+        ).to.equal("M 10 10 H 30 C 35 10 40 15 40 20 V 40");
+    });
 });

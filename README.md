@@ -53,16 +53,30 @@ The `smoothPolygon` function will take a array of number pairs (`[number, number
 
 This function was designed to work with a similar syntax to the CSS [`polygon`](https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape/polygon) command. Note that the values are not treated as percentages like in CSS but if you provide numbers between 0-100 it works just the same.
 
+This function is particularly helpful if you are using some other JS to generate a path dynamically that you want to smooth.
+
+The 3rd argument for this function is an option to close the polygon. i.e. create a smoothed line, rather than a complete shape. Which is true (closed) by default.
+
 ```js
 import { smoothPolygon } from "svg-smoother";
 
-const smoothPolygon = smoothPath(
+const path = smoothPolygon(
     [
         [10, 10],
         [40, 10],
         [40, 40],
     ],
     10
+); // Will end with a Z
+
+const path = smoothPolygon(
+    [
+        [10, 10],
+        [40, 10],
+        [40, 40],
+    ],
+    10,
+    false // Will NOT end with a Z
 );
 ```
 

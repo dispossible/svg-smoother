@@ -18,8 +18,8 @@ export function smoothPathElement(pathEl: SVGPathElement, radius = 8): SVGPathEl
     return pathEl;
 }
 
-export function smoothPolygon(polygon: Polygon, radius = 8): string {
-    const inputCommands = parsePolygon(polygon);
+export function smoothPolygon(polygon: Polygon, radius = 8, closedPath?: boolean): string {
+    const inputCommands = parsePolygon(polygon, closedPath);
     const smoothed = smoothCommands(inputCommands, radius);
     return stringifyCommands(smoothed);
 }
