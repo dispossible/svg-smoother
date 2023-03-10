@@ -24,6 +24,12 @@ describe("SVG Smoother", () => {
             "M 10 0 H 90 C 95 0 100 5 100 10 V 90 C 100 95 95 100 90 100 H 10 C 5 100 0 95 0 90 V 10 C 0 5 5 0 10 0 Z"
         );
     });
+
+    it("Smooth a multi-part path", () => {
+        expect(smoothPath("M 10 10 H 40 V 40 M 10 20 H 30 V 40", 10)).to.equal(
+            "M 10 10 H 30 C 35 10 40 15 40 20 V 40 M 10 20 H 20 C 25 20 30 25 30 30 V 40"
+        );
+    });
 });
 
 describe("SVG Element Smoother", () => {
@@ -34,7 +40,7 @@ describe("SVG Element Smoother", () => {
     });
 
     it("Smooth a simple path element", () => {
-        const dom: JSDOM = new JSDOM();
+        const dom = new JSDOM();
         const pathEl = dom.window.document.createElementNS(SVG_NS, "path");
         pathEl?.setAttributeNS(SVG_NS, "d", "M 10 10 L 40 10 L 40 40");
 
