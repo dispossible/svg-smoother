@@ -503,4 +503,9 @@ describe("Path parsing", () => {
     it("Fails to parse unknown commands", () => {
         expect(() => parsePath("P 40 50")).to.throw();
     });
+
+    it("Fails for non-strings", () => {
+        // @ts-expect-error intentionally wrong for the sake of the test
+        expect(() => parsePath([0, 10, 20, 30])).to.throw();
+    });
 });

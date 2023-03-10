@@ -9,6 +9,9 @@ import {
 import { chunkArray } from "../utils/array";
 
 export function parsePath(pathString: string): ParsedSVGCommand[] {
+    if (typeof pathString !== "string") {
+        throw new TypeError("Provided path must be a string");
+    }
     const normalizedPath = normalizePath(pathString);
     const rawCommands = readPathToCommands(normalizedPath);
     return parseCommands(rawCommands);
