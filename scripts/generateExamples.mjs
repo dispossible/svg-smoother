@@ -12,8 +12,8 @@ const template = fs.readFileSync(path.join(__dirname, "./examples.html"), "utf-8
 const dom = new JSDOM(template);
 
 const examples = [
-    ["0 0 100 100", "M 10 10 h 80 v 80 h -80 Z", 10],
-    ["0 0 100 100", "M 50 10 L 90 90 L 10 90 Z", 10],
+    ["0 0 200 200", "M 20 20 h 160 v 160 h -160 Z", 20],
+    ["0 0 200 200", "M 100 20 L 180 180 L 20 180 Z", 20],
     [
         "0 0 200 200",
         "M100 0L124.1 58.2576L186.603 50L148.2 100L186.603 150L124.1 141.742L100 200L75.9 141.742L13.3975 150L51.8 100L13.3975 50L75.9 58.2576Z",
@@ -30,7 +30,7 @@ const examples = [
         "M156.064 143.936L112.127 100L156.064 56.0636L200 100ZM43.9364 143.936L0 100L43.9364 56.0636L87.8728 100ZM100 200L56.0636 156.064L100 112.127L143.936 156.064ZM100 87.8728L56.0636 43.9364L100 0L143.936 43.9364Z",
         20,
     ],
-    ["0 0 100 100", "M 10 10 h 80 v 80 h -80 Z", 60],
+    ["0 0 200 200", "M 20 20 h 160 v 160 h -160 Z", 120],
     [
         "0 0 200 200",
         "M200 150H143.75C143.75 125.838 124.162 106.25 100 106.25C75.8375 106.25 56.25 125.838 56.25 150H0C0 94.7715 44.7715 50 100 50C155.228 50 200 94.7715 200 150Z",
@@ -60,10 +60,12 @@ function createPathElements(path, radius) {
     const pathElSmooth = dom.window.document.createElementNS(SVG_NS, "path");
     pathElSmooth?.setAttributeNS(SVG_NS, "d", path);
 
-    pathEl.setAttributeNS(SVG_NS, "stroke", "red");
-    pathEl.setAttributeNS(SVG_NS, "opacity", "0.6");
-    pathElSmooth.setAttributeNS(SVG_NS, "stroke", "green");
+    pathEl.setAttributeNS(SVG_NS, "stroke", "hsla(250deg 100% 70% / 60%)");
+    pathEl.setAttributeNS(SVG_NS, "stroke-width", "3");
     pathEl.setAttributeNS(SVG_NS, "fill", "none");
+
+    pathElSmooth.setAttributeNS(SVG_NS, "stroke", "hsl(290deg 100% 90%)");
+    pathElSmooth.setAttributeNS(SVG_NS, "stroke-width", "1");
     pathElSmooth.setAttributeNS(SVG_NS, "fill", "none");
 
     return [pathEl, smoothPathElement(pathElSmooth, radius)];
