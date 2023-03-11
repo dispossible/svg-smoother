@@ -160,195 +160,231 @@ describe("Stringify commands", () => {
 
 describe("Update command values", () => {
     it("Can update a move command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.MOVE,
-            values: [],
-            rawCommand: "",
-            relative: false,
-            end: {
-                x: 10,
-                y: 20,
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.MOVE,
+                values: [],
+                rawCommand: "",
+                relative: false,
+                end: {
+                    x: 10,
+                    y: 20,
+                },
             },
-        });
+            3
+        );
         expect(command.values).to.deep.equal([10, 20]);
         expect(command.rawCommand).to.equal("M 10 20");
     });
 
     it("Can update a line command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.LINE,
-            values: [],
-            rawCommand: "",
-            relative: false,
-            end: {
-                x: 20,
-                y: 10,
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.LINE,
+                values: [],
+                rawCommand: "",
+                relative: false,
+                end: {
+                    x: 20,
+                    y: 10,
+                },
             },
-        });
+            3
+        );
         expect(command.values).to.deep.equal([20, 10]);
         expect(command.rawCommand).to.equal("L 20 10");
     });
 
     it("Can update a relative line command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.LINE,
-            values: [],
-            rawCommand: "",
-            relative: true,
-            end: {
-                x: 10,
-                y: 20,
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.LINE,
+                values: [],
+                rawCommand: "",
+                relative: true,
+                end: {
+                    x: 10,
+                    y: 20,
+                },
             },
-        });
+            3
+        );
         expect(command.values).to.deep.equal([10, 20]);
         expect(command.rawCommand).to.equal("l 10 20");
     });
 
     it("Can update a horizontal command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.HORIZONTAL,
-            values: [],
-            rawCommand: "",
-            relative: false,
-            x: 10,
-        });
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.HORIZONTAL,
+                values: [],
+                rawCommand: "",
+                relative: false,
+                x: 10,
+            },
+            3
+        );
         expect(command.values).to.deep.equal([10]);
         expect(command.rawCommand).to.equal("H 10");
     });
 
     it("Can update a vertical command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.VERTICAL,
-            values: [],
-            rawCommand: "",
-            relative: false,
-            y: 10,
-        });
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.VERTICAL,
+                values: [],
+                rawCommand: "",
+                relative: false,
+                y: 10,
+            },
+            3
+        );
         expect(command.values).to.deep.equal([10]);
         expect(command.rawCommand).to.equal("V 10");
     });
 
     it("Can update a cubic command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.CUBIC,
-            values: [],
-            rawCommand: "",
-            relative: false,
-            controlPointA: {
-                x: 5,
-                y: 15,
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.CUBIC,
+                values: [],
+                rawCommand: "",
+                relative: false,
+                controlPointA: {
+                    x: 5,
+                    y: 15,
+                },
+                controlPointB: {
+                    x: 5,
+                    y: 8,
+                },
+                end: {
+                    x: 20,
+                    y: 10,
+                },
             },
-            controlPointB: {
-                x: 5,
-                y: 8,
-            },
-            end: {
-                x: 20,
-                y: 10,
-            },
-        });
+            3
+        );
         expect(command.values).to.deep.equal([5, 15, 5, 8, 20, 10]);
         expect(command.rawCommand).to.equal("C 5 15 5 8 20 10");
     });
 
     it("Can update a smooth cubic command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.SMOOTH_CUBIC,
-            values: [],
-            rawCommand: "",
-            relative: false,
-            controlPoint: {
-                x: 5,
-                y: 15,
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.SMOOTH_CUBIC,
+                values: [],
+                rawCommand: "",
+                relative: false,
+                controlPoint: {
+                    x: 5,
+                    y: 15,
+                },
+                end: {
+                    x: 20,
+                    y: 10,
+                },
             },
-            end: {
-                x: 20,
-                y: 10,
-            },
-        });
+            3
+        );
         expect(command.values).to.deep.equal([5, 15, 20, 10]);
         expect(command.rawCommand).to.equal("S 5 15 20 10");
     });
 
     it("Can update a quadratic command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.QUADRATIC,
-            values: [],
-            rawCommand: "",
-            relative: false,
-            controlPoint: {
-                x: 5,
-                y: 15,
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.QUADRATIC,
+                values: [],
+                rawCommand: "",
+                relative: false,
+                controlPoint: {
+                    x: 5,
+                    y: 15,
+                },
+                end: {
+                    x: 20,
+                    y: 10,
+                },
             },
-            end: {
-                x: 20,
-                y: 10,
-            },
-        });
+            3
+        );
         expect(command.values).to.deep.equal([5, 15, 20, 10]);
         expect(command.rawCommand).to.equal("Q 5 15 20 10");
     });
 
     it("Can update a smooth quadratic command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.SMOOTH_QUADRATIC,
-            values: [],
-            rawCommand: "",
-            relative: false,
-            end: {
-                x: 20,
-                y: 10,
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.SMOOTH_QUADRATIC,
+                values: [],
+                rawCommand: "",
+                relative: false,
+                end: {
+                    x: 20,
+                    y: 10,
+                },
             },
-        });
+            3
+        );
         expect(command.values).to.deep.equal([20, 10]);
         expect(command.rawCommand).to.equal("T 20 10");
     });
 
     it("Can update an arc command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.ARC,
-            values: [],
-            rawCommand: "",
-            relative: false,
-            radiusX: 18,
-            radiusY: 23,
-            angle: 330,
-            largeArc: true,
-            sweep: false,
-            end: {
-                x: 20,
-                y: 10,
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.ARC,
+                values: [],
+                rawCommand: "",
+                relative: false,
+                radiusX: 18,
+                radiusY: 23,
+                angle: 330,
+                largeArc: true,
+                sweep: false,
+                end: {
+                    x: 20,
+                    y: 10,
+                },
             },
-        });
+            3
+        );
         expect(command.values).to.deep.equal([18, 23, 330, 1, 0, 20, 10]);
         expect(command.rawCommand).to.equal("A 18 23 330 1 0 20 10");
 
-        const command2 = updateCommandValues({
-            operation: SVGOperation.ARC,
-            values: [],
-            rawCommand: "",
-            relative: true,
-            radiusX: 26,
-            radiusY: 41,
-            angle: 270,
-            largeArc: false,
-            sweep: true,
-            end: {
-                x: 15,
-                y: 6,
+        const command2 = updateCommandValues(
+            {
+                operation: SVGOperation.ARC,
+                values: [],
+                rawCommand: "",
+                relative: true,
+                radiusX: 26,
+                radiusY: 41,
+                angle: 270,
+                largeArc: false,
+                sweep: true,
+                end: {
+                    x: 15,
+                    y: 6,
+                },
             },
-        });
+            3
+        );
         expect(command2.values).to.deep.equal([26, 41, 270, 0, 1, 15, 6]);
         expect(command2.rawCommand).to.equal("a 26 41 270 0 1 15 6");
     });
 
     it("Can update a close command", () => {
-        const command = updateCommandValues({
-            operation: SVGOperation.CLOSE,
-            values: [],
-            rawCommand: "",
-            relative: false,
-        });
+        const command = updateCommandValues(
+            {
+                operation: SVGOperation.CLOSE,
+                values: [],
+                rawCommand: "",
+                relative: false,
+            },
+            3
+        );
         expect(command.values).to.deep.equal([]);
         expect(command.rawCommand).to.equal("Z");
     });

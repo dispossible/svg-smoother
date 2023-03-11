@@ -1,4 +1,5 @@
 import { ParsedSVGCommand, RawSVGCommand, SVGOperation } from "../domain";
+import { roundToDp } from "./math";
 
 export const COMMAND_LENGTH: Record<SVGOperation, number> = {
     [SVGOperation.MOVE]: 2,
@@ -42,7 +43,7 @@ export function stringifyCommands(commands: RawSVGCommand[]): string {
     return commands.map(stringifyCommandFromCommand).join(" ");
 }
 
-export function updateCommandValues(command: ParsedSVGCommand): ParsedSVGCommand {
+export function updateCommandValues(command: ParsedSVGCommand, numberAccuracy: number): ParsedSVGCommand {
     switch (command.operation) {
         case SVGOperation.MOVE:
         case SVGOperation.LINE:
@@ -92,6 +93,7 @@ export function updateCommandValues(command: ParsedSVGCommand): ParsedSVGCommand
         }
     }
 
+    command.values = command.values.map((val) => roundToDp(val, numberAccuracy));
     command.rawCommand = stringifyCommandFromCommand(command);
     return command;
 }

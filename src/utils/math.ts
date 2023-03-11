@@ -18,3 +18,11 @@ export function moveTowardsFractional(movingPoint: Point, targetPoint: Point, fr
         y: movingPoint.y + (targetPoint.y - movingPoint.y) * fraction,
     };
 }
+
+export function roundToDp(value: number, decimalPlaces: number) {
+    // ChatGPT wrote this. It's basically making a power of 10 based on the decimalPlaces,
+    // then uses that to offset the decimal place in the value before rounding.
+    // So 2dp is 100, 3 is 1000, 4 is 10000, etc
+    const factor = 10 ** decimalPlaces;
+    return Math.round(value * factor) / factor;
+}

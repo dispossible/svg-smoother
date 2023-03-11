@@ -27,7 +27,7 @@ export function parsePolygon(polygon: Polygon, closedPath = true): ParsedSVGComm
                 y: point[1],
             },
         } as MoveSVGCommand | LineSVGCommand;
-        return updateCommandValues(command);
+        return updateCommandValues(command, 3);
     });
 
     if (closedPath) {

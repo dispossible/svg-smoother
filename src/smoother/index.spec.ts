@@ -3,6 +3,7 @@ import { expect } from "chai";
 
 import { smoothCommands } from "./index";
 import { SVGOperation } from "../domain";
+import { defaultConfig } from "../domain/config";
 
 describe("Smooth commands", () => {
     it("Smooth a simple corner", () => {
@@ -40,7 +41,7 @@ describe("Smooth commands", () => {
                         },
                     },
                 ],
-                10
+                defaultConfig({})
             )
         ).to.deep.equal([
             {
