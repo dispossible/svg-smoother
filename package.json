@@ -77,5 +77,15 @@
         "commitizen": {
             "path": "./node_modules/cz-conventional-changelog"
         }
-    }
+    },
+    "keywords": [
+        "SVG",
+        "path",
+        "border-radius",
+        "smooth",
+        "smoother",
+        "utility",
+        "round",
+        "vector"
+    ]
 }
