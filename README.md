@@ -131,7 +131,7 @@ const path = smoothPolygon(
 -   Investigate support for smoothing into and out of curve commands
 -   Add more examples
 -   Measure and improve performance
--   Add an optimization step to remove large floats, ~~and restore usage of H and V commands~~
+-   ~~Add an optimization step to remove large floats, and restore usage of H and V commands~~
 
 ---
 
