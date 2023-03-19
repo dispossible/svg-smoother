@@ -7,14 +7,28 @@
         <title>Document</title>
         <style>
             body {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 16px;
                 margin: 32px;
                 background: hsl(200deg 30% 10%);
+                color: hsl(0deg 0% 80%);
+            }
+            ul {
+                list-style: none;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+                gap: 16px;
+            }
+            li {
+                display: grid;
+                gap: 16px;
+                grid-template-columns: 2fr 3fr;
             }
             svg {
                 background: hsla(0 0% 100% / 5%);
+            }
+            .config {
+                padding: 16px;
+                background: hsla(0 0% 100% / 5%);
+                white-space: pre;
             }
         </style>
     </head>
