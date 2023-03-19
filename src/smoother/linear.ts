@@ -10,6 +10,7 @@ import {
     SmoothQuadraticSVGCommand,
     SVGOperation,
 } from "../domain";
+import { equalPoint } from "../utils/math";
 
 type NonLinearSVGCommand =
     | MoveSVGCommand
@@ -65,13 +66,20 @@ export function removeLinearCommands(commands: ParsedSVGCommand[]): NonLinearSVG
             }
         }
 
+        // Remove commands that make 0 length lines, they get in the way later
+        // Arguably could be used to add sharp corners to the smoothed result,
+        // but more likely just a badly written path
+        if (SVGOperation.LINE === command.operation && equalPoint(command.end, currentPoint, 10)) {
+            return null;
+        }
+
         if (command.operation !== SVGOperation.CLOSE) {
             currentPoint = { ...command.end };
         }
         return command;
     });
 
-    return clearedCommands;
+    return clearedCommands.filter((cmd) => !!cmd) as NonLinearSVGCommand[];
 }
 
 /**
