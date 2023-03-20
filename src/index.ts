@@ -15,6 +15,9 @@ export function smoothPath(path: string, config?: Partial<SmootherConfig>): stri
 
 export function smoothPathElement(pathEl: SVGPathElement, config?: Partial<SmootherConfig>): SVGPathElement {
     const pathString = pathEl.getAttributeNS(SVG_NS, "d") ?? "";
+    if (!pathString) {
+        return pathEl;
+    }
     const smoothedPath = smoothPath(pathString, config);
     pathEl.setAttributeNS(SVG_NS, "d", smoothedPath);
     return pathEl;

@@ -50,6 +50,30 @@ describe("SVG Smoother", () => {
             "M 100 0 C 103.395 53.76 146.24 96.605 200 100 C 146.24 103.395 103.395 146.24 100 200 C 96.605 146.24 53.76 103.395 0 100 C 53.76 96.605 96.605 53.76 100 0 V 0 Z"
         );
     });
+
+    it("Smooth a square with full commands", () => {
+        expect(smoothPath("M 0 0 H 100 V 100 H 0 Z", { reduceCommands: false })).to.equal(
+            "M 10 0 L 90 0 C 95 0 100 5 100 10 L 100 90 C 100 95 95 100 90 100 L 10 100 C 5 100 0 95 0 90 L 0 10 C 0 5 5 0 10 0 Z"
+        );
+    });
+
+    it("Smooths evenly on short lines when limited", () => {
+        expect(smoothPath("M 10 10 L 40 10 L 40 20", { radius: 20, allowEllipse: false })).to.equal(
+            "M 10 10 H 30 C 35 10 40 15 40 20 V 20"
+        );
+    });
+
+    it("Can overflow smoothing", () => {
+        expect(smoothPath("M 10 10 L 40 10 L 40 20", { radius: 20, preventOverflow: false })).to.equal(
+            "M 10 10 H 20 C 30 10 40 15 40 20 V 20"
+        );
+    });
+
+    it("Handles paths that start with a line", () => {
+        expect(smoothPath("L 20 20 L 0 40 Z")).to.equal(
+            "M 0 10 L 7.071 32.929 C 3.536 36.464 0 35 0 30 V 10 C 0 5 0 5 0 10 Z"
+        );
+    });
 });
 
 describe("SVG Element Smoother", () => {
@@ -62,12 +86,20 @@ describe("SVG Element Smoother", () => {
     it("Smooth a simple path element", () => {
         const dom = new JSDOM();
         const pathEl = dom.window.document.createElementNS(SVG_NS, "path");
-        pathEl?.setAttributeNS(SVG_NS, "d", "M 10 10 L 40 10 L 40 40");
+        pathEl.setAttributeNS(SVG_NS, "d", "M 10 10 L 40 10 L 40 40");
 
         smoothPathElement(pathEl);
-        const newPath = pathEl?.getAttributeNS(SVG_NS, "d");
+        const newPath = pathEl.getAttributeNS(SVG_NS, "d");
 
         expect(newPath).to.equal("M 10 10 H 30 C 35 10 40 15 40 20 V 40");
+    });
+
+    it("Handles missing attribute", () => {
+        const dom = new JSDOM();
+        const pathEl = dom.window.document.createElementNS(SVG_NS, "path");
+        smoothPathElement(pathEl);
+        const newPath = pathEl.getAttributeNS(SVG_NS, "d");
+        expect(newPath).to.to.null;
     });
 });
 
