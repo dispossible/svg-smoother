@@ -123,13 +123,17 @@ const path = smoothPolygon(
 
 -   `closePath` Only applies to the `smoothPolygon` command. A boolean that when set to true closes the provided path into a complete shape. When false it is left open as a line. Defaults to `true` if not provided.
 
+-   `preventOverflow` A boolean that controls if your radius value should be constrained to not be larger than the line it is smoothing. Defaults to `true`, preventing overflow. See [examples file](https://htmlpreview.github.io/?https://github.com/dispossible/svg-smoother/blob/main/examples.html) for an example of this in use.
+
+-   `allowEllipse` A boolean to control if smoothing should stick to perfect circles or create ellipses. Defaults to `true` so smoothing will create mismatched radius values. If it helps with understanding it is similar to having a dual value CSS `border-radius` vs a single value, `border-radius: 10px;` vs `border-radius: 10px / 20px;`. Also check the [examples file](https://htmlpreview.github.io/?https://github.com/dispossible/svg-smoother/blob/main/examples.html) for a visual example of this in practice.
+
 ---
 
 ## Planned features
 
--   Deal with radius values that are larger than the preceding line
+-   ~~Deal with radius values that are larger than the preceding line~~
 -   Investigate support for smoothing into and out of curve commands
--   Add more examples
+-   ~~Add more examples~~
 -   Measure and improve performance
 -   ~~Add an optimization step to remove large floats, and restore usage of H and V commands~~
 

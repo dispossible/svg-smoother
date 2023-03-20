@@ -10,7 +10,7 @@ import {
     SVGOperation,
 } from "../domain";
 import { convertToAbsolute } from "./absolute";
-import { moveTowards, moveTowardsFractional } from "../utils/math";
+import { equalPoint, getDistance, moveTowards, moveTowardsFractional } from "../utils/math";
 import { updateCommandValues } from "../utils/commands";
 import { removeLinearCommands, replaceLinearCommands } from "./linear";
 import { separateSubPaths } from "./subPaths";
@@ -39,11 +39,20 @@ function smoothAbsoluteCommands(inputCommands: ParsedSVGCommand[], config: Smoot
     const lastCommand = inputCommands[inputCommands.length - 1];
 
     let closeCommand: ParsedSVGCommand | null = null;
-    if (lastCommand.operation === SVGOperation.CLOSE && firstCommand.operation === SVGOperation.MOVE) {
+    if (lastCommand.operation === SVGOperation.CLOSE) {
         closeCommand = {
-            ...firstCommand,
             operation: SVGOperation.LINE,
+            rawCommand: "",
+            values: [],
+            end: { x: 0, y: 0 },
+            relative: false,
         };
+        if (firstCommand.operation === SVGOperation.MOVE) {
+            closeCommand = {
+                ...firstCommand,
+                operation: SVGOperation.LINE,
+            };
+        }
         // Replace the Z command with an L for now to allow the final corner to be smoothed
         inputCommands[inputCommands.length - 1] = closeCommand;
     }
@@ -54,7 +63,18 @@ function smoothAbsoluteCommands(inputCommands: ParsedSVGCommand[], config: Smoot
     for (let i = 1; i < inputCommands.length; i++) {
         const prevCmd = inputCommands[i - 1];
         const currCmd = inputCommands[i];
-        const nextCmd = i === inputCommands.length - 1 && closeCommand ? inputCommands[1] : inputCommands[i + 1];
+        let nextCmd = inputCommands[i + 1];
+        let nextNextCmd = inputCommands[i + 2];
+
+        if (closeCommand) {
+            if (i === inputCommands.length - 1) {
+                nextCmd = inputCommands[1];
+                nextNextCmd = inputCommands[2];
+            }
+            if (i === inputCommands.length - 2) {
+                nextNextCmd = inputCommands[1];
+            }
+        }
 
         if (
             isValidPoint(prevCmd) &&
@@ -63,17 +83,39 @@ function smoothAbsoluteCommands(inputCommands: ParsedSVGCommand[], config: Smoot
             nextCmd.operation === SVGOperation.LINE &&
             currCmd.operation === SVGOperation.LINE
         ) {
-            const curveStart = moveTowards(currCmd.end, prevCmd.end, config.radius);
-            const curveEnd = moveTowards(currCmd.end, nextCmd.end, config.radius);
+            let maxRadiusStart = config.radius;
+            let maxRadiusEnd = config.radius;
+            if (config.preventOverflow) {
+                const startDistance =
+                    getDistance(prevCmd.end, currCmd.end) /
+                    (prevCmd.operation === SVGOperation.LINE ||
+                    (prevCmd.operation === SVGOperation.MOVE && closeCommand)
+                        ? 2
+                        : 1);
+                maxRadiusStart = Math.min(maxRadiusStart, startDistance);
+
+                const endDistance =
+                    getDistance(currCmd.end, nextCmd.end) / (nextNextCmd?.operation === SVGOperation.LINE ? 2 : 1);
+                maxRadiusEnd = Math.min(maxRadiusEnd, endDistance);
+
+                if (!config.allowEllipse) {
+                    maxRadiusStart = maxRadiusEnd = Math.min(maxRadiusStart, maxRadiusEnd);
+                }
+            }
+
+            const curveStart = moveTowards(currCmd.end, prevCmd.end, maxRadiusStart);
+            const curveEnd = moveTowards(currCmd.end, nextCmd.end, maxRadiusEnd);
 
             // Add a line to the start position
-            smoothedCommands.push({
-                operation: SVGOperation.LINE,
-                relative: false,
-                values: [],
-                rawCommand: "",
-                end: curveStart,
-            });
+            if (!equalPoint(curveStart, prevCmd.end, config.numberAccuracy)) {
+                smoothedCommands.push({
+                    operation: SVGOperation.LINE,
+                    relative: false,
+                    values: [],
+                    rawCommand: "",
+                    end: curveStart,
+                });
+            }
 
             const startControl = moveTowardsFractional(curveStart, currCmd.end, 0.5);
             const endControl = moveTowardsFractional(currCmd.end, curveEnd, 0.5);
@@ -95,11 +137,15 @@ function smoothAbsoluteCommands(inputCommands: ParsedSVGCommand[], config: Smoot
     if (closeCommand) {
         // Re-add the Z command if it was removed earlier
         const firstCmd = smoothedCommands[0] as MoveSVGCommand;
-        const lastCmd = smoothedCommands[smoothedCommands.length - 1] as LineSVGCommand;
-        firstCmd.operation = SVGOperation.MOVE;
-        firstCmd.end = {
-            ...lastCmd.end,
-        };
+        const lastCmd = smoothedCommands[smoothedCommands.length - 1];
+
+        if (isValidPoint(lastCmd)) {
+            firstCmd.operation = SVGOperation.MOVE;
+            firstCmd.end = {
+                ...lastCmd.end,
+            };
+        }
+
         smoothedCommands.push({
             rawCommand: "Z",
             operation: SVGOperation.CLOSE,
